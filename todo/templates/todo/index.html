@@ -1,0 +1,72 @@
+{% extends 'todo/layout.html' %}
+
+{% block content %}
+<style>
+    .completed {
+        text-decoration: line-through;
+    }
+</style>
+
+<div style="margin-top: 50px;" class="ui container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+          <span class="fs-4"><mark> Money</mark> Словник</span>
+        </a>
+  
+        <ul class="nav nav-pills">
+          <li class="nav-item"><a  class="nav-link active" aria-current="page">Головна сторінка</a></li>
+        </ul>
+      </header>
+    <title> Записник Інформації </title>
+    <form class="ui form" action="/add" method="post">
+        <div class="field">
+            <label>Введіть свої данні по такому шаблону: <mark>назва/категорія/дата/сума витрат</mark></label>
+            <input type="text" name="title" placeholder="Облік витрат"><br>
+        </div>
+        <button class="ui teal basic button" type="submit">Додати</button>
+    </form>
+
+    {% for todo in todo_list %}
+    
+    <div class="ui segment">
+        
+        <p class="ui big header {% if todo.is_complete %}completed{% endif %}">№{{ todo.id }} | {{ todo.title }} </p>
+    
+        {% if todo.is_complete == False %}
+        <span class="ui gray label">Не закінчено</span>
+        <a class="ui primary basic button close-btn" href="/update/{{ todo.id }}">Закрити</a>
+        {% else %}
+        <span class="ui green label">Закінчено</span>
+        <a class="ui blue button open-btn" href="/update/{{ todo.id }}">Відкрити</a>
+        {% endif %}
+        <a class="ui negative basic button" href="/delete/{{ todo.id }}">Видалити</a>
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+
+
+<div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <p class="col-md-4 mb-0 text-body-secondary">© 2023 Wikipedia, by q1dox</p>
+  
+      <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      </a>
+  
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+      </ul>
+    </footer>
+  </div>
+
+{% endblock content %}
+
